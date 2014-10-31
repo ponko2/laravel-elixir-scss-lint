@@ -1,5 +1,16 @@
 # laravel-elixir-scss-lint
 
+## Install
+
+```sh
+$ gem install scss-lint
+```
+
+```sh
+$ npm install laravel-elixir-scss-lint --save-dev
+$ touch .scss-lint.yml
+```
+
 ## Usage
 
 ```javascript
