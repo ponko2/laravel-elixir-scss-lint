@@ -1,0 +1,35 @@
+{
+  "name": "laravel-elixir-scss-lint",
+  "version": "0.1.0",
+  "description": "Laravel Elixir SCSS-Lint Extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ponko2/laravel-elixir-scss-lint.git"
+  },
+  "keywords": [
+    "laravel",
+    "elixir",
+    "scss-lint",
+    "gulp"
+  ],
+  "author": "Takahito Nakano",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ponko2/laravel-elixir-scss-lint/issues"
+  },
+  "homepage": "https://github.com/ponko2/laravel-elixir-scss-lint",
+  "dependencies": {
+    "events": "^1.0.2",
+    "gulp-notify": "^2.0.0",
+    "gulp-scss-lint": "^0.1.4",
+    "gulp-util": "^3.0.1",
+    "map-stream": "^0.1.0",
+    "string-length": "^1.0.0",
+    "text-table": "^0.2.0",
+    "underscore": "^1.7.0"
+  }
+}
