@@ -97,7 +97,7 @@ elixir.extend("scssLint", function (src, options) {
   var config  = this,
       baseDir = config.assetsDir + 'sass';
 
-  src     = config.buildGulpSrc(src, baseDir, '/**/*.scss');
+  src     = src || baseDir + '/**/*.scss';
   options = _.extend({customReport: function () {}}, options);
 
   var onError = function (err) {
