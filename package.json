@@ -1,6 +1,6 @@
 {
   "name": "laravel-elixir-scss-lint",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Laravel Elixir SCSS-Lint Extension",
   "main": "index.js",
   "scripts": {
