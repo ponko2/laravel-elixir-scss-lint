@@ -13,6 +13,8 @@ $ touch .scss-lint.yml
 
 ## Usage
 
+### Example Gulpfile
+
 ```javascript
 var elixir = require('laravel-elixir');
 
@@ -23,7 +25,11 @@ elixir(function(mix) {
 });
 ```
 
-#### bundleExec
+### Advanced example
+
+```javascript
+mix.scssLint('resources/assets/sass/**/*.scss');
+```
 
 If your gem is installed via [bundler](http://bundler.io)
 
