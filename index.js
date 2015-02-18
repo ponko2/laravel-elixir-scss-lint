@@ -64,7 +64,7 @@ var stylishReporter = function () {
         stringLength: stringLength
       }).split('\n').map(function (value, index) {
         if (headers[index]) {
-           return '\n' + colors.underline(headers[index]) + '\n' + value;
+          return '\n' + colors.underline(headers[index]) + '\n' + value;
         }
 
         return value;
