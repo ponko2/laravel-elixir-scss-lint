@@ -1,21 +1,21 @@
 'use strict';
 
-var gulp          = require('gulp'),
-    elixir        = require('laravel-elixir'),
-    notify        = require('gulp-notify'),
-    scssLint      = require('gulp-scss-lint'),
-    gutil         = require('gulp-util'),
-    stringLength  = require('string-length'),
-    table         = require('text-table'),
-    map           = require('map-stream'),
-    events        = require('events'),
-    _             = require('underscore'),
-    colors        = gutil.colors,
-    errorSymbol   = colors.red('✖'),
-    warningSymbol = colors.yellow('⚠'),
-    emitter       = new events.EventEmitter(),
-    PluginError   = gutil.PluginError,
-    isWin         = process.platform === 'win32';
+var gulp          = require('gulp');
+var elixir        = require('laravel-elixir');
+var notify        = require('gulp-notify');
+var scssLint      = require('gulp-scss-lint');
+var gutil         = require('gulp-util');
+var stringLength  = require('string-length');
+var table         = require('text-table');
+var map           = require('map-stream');
+var events        = require('events');
+var _             = require('underscore');
+var colors        = gutil.colors;
+var errorSymbol   = colors.red('✖');
+var warningSymbol = colors.yellow('⚠');
+var emitter       = new events.EventEmitter();
+var PluginError   = gutil.PluginError;
+var isWin         = process.platform === 'win32';
 
 function pluralize(str, count) {
   return str + (count === 1 ? '' : 's');
@@ -24,11 +24,11 @@ function pluralize(str, count) {
 var stylishReporter = function () {
   return map(function (files, cb) {
     _.each(files, function (file) {
-      var output       = '',
-          headers      = [],
-          prevFile     = '',
-          errorCount   = 0,
-          warningCount = 0;
+      var output       = '';
+      var headers      = [];
+      var prevFile     = '';
+      var errorCount   = 0;
+      var warningCount = 0;
 
       if (file.scsslint.success) {
         return;
@@ -107,8 +107,8 @@ var failReporter = function () {
 };
 
 elixir.extend('scssLint', function (src, options) {
-  var config  = this,
-      baseDir = config.assetsDir + 'sass';
+  var config  = this;
+  var baseDir = config.assetsDir + 'sass';
 
   src     = src || baseDir + '/**/*.scss';
   options = _.extend({customReport: function () {}}, options);
