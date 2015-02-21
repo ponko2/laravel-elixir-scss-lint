@@ -10,6 +10,7 @@ var table         = require('text-table');
 var map           = require('map-stream');
 var events        = require('events');
 var _             = require('underscore');
+var path          = require('path');
 var colors        = gutil.colors;
 var errorSymbol   = colors.red('✖');
 var warningSymbol = colors.yellow('⚠');
@@ -110,7 +111,8 @@ elixir.extend('scssLint', function (src, options) {
   var config  = this;
   var baseDir = config.assetsDir + 'sass';
 
-  src     = src || baseDir + '/**/*.scss';
+  src = src || baseDir + '/**/*.scss';
+
   options = _.extend({customReport: function () {}}, options);
 
   var onError = function (err) {
@@ -118,7 +120,7 @@ elixir.extend('scssLint', function (src, options) {
       title: 'Laravel Elixir',
       subtitle: 'SCSS-Lint failed.',
       message: '<%= error.message %>',
-      icon: __dirname + '/../laravel-elixir/icons/fail.png'
+      icon: path.join(__dirname, '../laravel-elixir/icons/fail.png')
     })(err);
 
     this.emit('end');
@@ -135,7 +137,7 @@ elixir.extend('scssLint', function (src, options) {
         title: 'Laravel Elixir',
         subtitle: 'SCSS-Lint passed.',
         message: ' ',
-        icon: __dirname + '/../laravel-elixir/icons/pass.png'
+        icon: path.join(__dirname, '../laravel-elixir/icons/pass.png')
       }));
   });
 
