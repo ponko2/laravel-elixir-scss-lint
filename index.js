@@ -22,9 +22,9 @@ function pluralize(str, count) {
   return str + (count === 1 ? '' : 's');
 }
 
-var stylishReporter = function () {
-  return map(function (files, cb) {
-    _.each(files, function (file) {
+var stylishReporter = function() {
+  return map(function(files, cb) {
+    _.each(files, function(file) {
       var output       = '';
       var headers      = [];
       var prevFile     = '';
@@ -35,7 +35,7 @@ var stylishReporter = function () {
         return;
       }
 
-      output += table(file.scsslint.issues.map(function (issue, index) {
+      output += table(file.scsslint.issues.map(function(issue, index) {
         var isError = issue.severity !== 'warning';
 
         var line = ['', colors.gray('line ' + issue.line)];
@@ -63,7 +63,7 @@ var stylishReporter = function () {
         return line;
       }), {
         stringLength: stringLength
-      }).split('\n').map(function (value, index) {
+      }).split('\n').map(function(value, index) {
         if (headers[index]) {
           return '\n' + colors.underline(headers[index]) + '\n' + value;
         }
@@ -87,14 +87,14 @@ var stylishReporter = function () {
   });
 };
 
-var failReporter = function () {
-  return map(function (files, cb) {
-    var errors = _.filter(files, function (file) {
+var failReporter = function() {
+  return map(function(files, cb) {
+    var errors = _.filter(files, function(file) {
       return !file.scsslint.success;
     });
 
     if (errors.length > 0) {
-      var fails = _.map(errors, function (file) {
+      var fails = _.map(errors, function(file) {
         return file.path;
       });
 
@@ -107,15 +107,14 @@ var failReporter = function () {
   });
 };
 
-elixir.extend('scssLint', function (src, options) {
-  var config  = this;
-  var baseDir = config.assetsDir + 'sass';
+elixir.extend('scssLint', function(src, options) {
+  var baseDir = this.assetsDir + 'sass';
 
   src = src || baseDir + '/**/*.scss';
 
-  options = _.extend({customReport: function () {}}, options);
+  options = _.extend({customReport: function() {}}, options);
 
-  var onError = function (err) {
+  var onError = function(err) {
     notify.onError({
       title: 'Laravel Elixir',
       subtitle: 'SCSS-Lint failed.',
@@ -126,7 +125,7 @@ elixir.extend('scssLint', function (src, options) {
     this.emit('end');
   };
 
-  gulp.task('scss-lint', function () {
+  gulp.task('scss-lint', function() {
     return gulp.src(src)
       .pipe(scssLint(options))
       .pipe(gutil.buffer())
