@@ -2,6 +2,7 @@
 
 var gulp          = require('gulp');
 var elixir        = require('laravel-elixir');
+var Task          = elixir.Task;
 var notify        = require('gulp-notify');
 var scssLint      = require('gulp-scss-lint');
 var gutil         = require('gulp-util');
@@ -125,7 +126,7 @@ elixir.extend('scssLint', function(src, options) {
     this.emit('end');
   };
 
-  gulp.task('scss-lint', function() {
+  new Task('scss-lint', function() {
     return gulp.src(src)
       .pipe(scssLint(options))
       .pipe(gutil.buffer())
@@ -138,9 +139,6 @@ elixir.extend('scssLint', function(src, options) {
         message: ' ',
         icon: path.join(__dirname, '../laravel-elixir/icons/pass.png')
       }));
-  });
-
-  this.registerWatcher('scss-lint', src);
-
-  return this.queueTask('scss-lint');
+  })
+  .watch(src);
 });
