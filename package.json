@@ -24,7 +24,6 @@
   "homepage": "https://github.com/ponko2/laravel-elixir-scss-lint",
   "dependencies": {
     "events": "^1.0.2",
-    "gulp-notify": "^2.0.0",
     "gulp-scss-lint": "^0.1.4",
     "gulp-util": "^3.0.1",
     "map-stream": "^0.1.0",

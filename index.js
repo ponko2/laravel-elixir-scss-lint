@@ -1,9 +1,9 @@
 'use strict';
 
 var gulp          = require('gulp');
-var elixir        = require('laravel-elixir');
-var Task          = elixir.Task;
-var notify        = require('gulp-notify');
+var Elixir        = require('laravel-elixir');
+var Task          = Elixir.Task;
+var notify        = new Elixir.Notification();
 var scssLint      = require('gulp-scss-lint');
 var gutil         = require('gulp-util');
 var stringLength  = require('string-length');
@@ -11,7 +11,6 @@ var table         = require('text-table');
 var map           = require('map-stream');
 var events        = require('events');
 var _             = require('underscore');
-var path          = require('path');
 var colors        = gutil.colors;
 var errorSymbol   = colors.red('✖');
 var warningSymbol = colors.yellow('⚠');
@@ -108,7 +107,7 @@ var failReporter = function () {
   });
 };
 
-elixir.extend('scssLint', function (src, options) {
+Elixir.extend('scssLint', function (src, options) {
   var baseDir = this.assetsDir + 'sass';
 
   src = src || baseDir + '/**/*.scss';
@@ -116,12 +115,7 @@ elixir.extend('scssLint', function (src, options) {
   options = _.extend({customReport: function () {}}, options);
 
   var onError = function (err) {
-    notify.onError({
-      title: 'Laravel Elixir',
-      subtitle: 'SCSS-Lint failed.',
-      message: '<%= error.message %>',
-      icon: path.join(__dirname, '../laravel-elixir/icons/fail.png')
-    })(err);
+    notify.error(err, 'SCSS-Lint failed');
 
     this.emit('end');
   };
@@ -133,12 +127,7 @@ elixir.extend('scssLint', function (src, options) {
       .pipe(stylishReporter())
       .pipe(failReporter())
       .on('error', onError)
-      .pipe(notify({
-        title: 'Laravel Elixir',
-        subtitle: 'SCSS-Lint passed.',
-        message: ' ',
-        icon: path.join(__dirname, '../laravel-elixir/icons/pass.png')
-      }));
+      .pipe(notify.message('SCSS-Lint passed'));
   })
   .watch(src);
 });
