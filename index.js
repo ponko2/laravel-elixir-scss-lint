@@ -3,6 +3,7 @@
 var gulp          = require('gulp');
 var Elixir        = require('laravel-elixir');
 var Task          = Elixir.Task;
+var config        = Elixir.config;
 var notify        = new Elixir.Notification();
 var scssLint      = require('gulp-scss-lint');
 var gutil         = require('gulp-util');
@@ -108,7 +109,7 @@ var failReporter = function () {
 };
 
 Elixir.extend('scssLint', function (src, options) {
-  var baseDir = this.assetsDir + 'sass';
+  var baseDir = config.get('assets.css.sass.folder');
 
   src = src || baseDir + '/**/*.scss';
 
