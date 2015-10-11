@@ -120,6 +120,8 @@ Elixir.extend('scssLint', function (src, options) {
   };
 
   new Task('scss-lint', function () {
+    this.log(paths.src);
+
     return gulp.src(paths.src.path)
       .pipe(scssLint(_.extend({customReport: function () {}}, options)))
       .pipe(gutil.buffer())
