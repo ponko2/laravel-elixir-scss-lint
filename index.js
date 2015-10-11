@@ -99,7 +99,7 @@ var failReporter = function () {
         return file.path;
       });
 
-      var message = 'SCSS-Lint failed for: ' + fails.join(', ');
+      var message = fails.join(', ');
 
       emitter.emit('error', new PluginError('scss-lint', message));
     }
@@ -115,7 +115,7 @@ Elixir.extend('scssLint', function (src, options) {
     ]);
 
   var onError = function (err) {
-    notify.error(err, 'SCSS-Lint failed');
+    notify.error(err, 'SCSS-Lint Failed');
     this.emit('end');
   };
 
@@ -126,7 +126,7 @@ Elixir.extend('scssLint', function (src, options) {
       .pipe(stylishReporter())
       .pipe(failReporter())
       .on('error', onError)
-      .pipe(notify.message('SCSS-Lint passed'));
+      .pipe(notify.message('SCSS-Lint Passed'));
   })
   .watch(paths.src.path);
 });
