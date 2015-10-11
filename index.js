@@ -127,8 +127,7 @@ Elixir.extend('scssLint', function (src, options) {
       .pipe(gutil.buffer())
       .pipe(stylishReporter())
       .pipe(failReporter())
-      .on('error', onError)
-      .pipe(notify.message('SCSS-Lint Passed'));
+      .on('error', onError);
   })
   .watch(paths.src.path);
 });
