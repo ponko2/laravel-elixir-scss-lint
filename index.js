@@ -81,7 +81,7 @@ var stylishReporter = function () {
       output += '  ' + warningSymbol + '  ' +
         warningCount + pluralize(' warning', warningCount);
 
-      console.log(output + '\n');
+      gutil.log(output + '\n');
     });
 
     cb(null, files);
@@ -109,26 +109,24 @@ var failReporter = function () {
 };
 
 Elixir.extend('scssLint', function (src, options) {
-  var baseDir = config.get('assets.css.sass.folder');
-
-  src = src || baseDir + '/**/*.scss';
-
-  options = _.extend({customReport: function () {}}, options);
+  var paths = new Elixir.GulpPaths()
+    .src(src || [
+      config.get('assets.css.sass.folder') + '/**/*.scss'
+    ]);
 
   var onError = function (err) {
     notify.error(err, 'SCSS-Lint failed');
-
     this.emit('end');
   };
 
   new Task('scss-lint', function () {
-    return gulp.src(src)
-      .pipe(scssLint(options))
+    return gulp.src(paths.src.path)
+      .pipe(scssLint(_.extend({customReport: function () {}}, options)))
       .pipe(gutil.buffer())
       .pipe(stylishReporter())
       .pipe(failReporter())
       .on('error', onError)
       .pipe(notify.message('SCSS-Lint passed'));
   })
-  .watch(src);
+  .watch(paths.src.path);
 });
