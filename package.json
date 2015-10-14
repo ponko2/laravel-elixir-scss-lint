@@ -30,5 +30,9 @@
     "string-length": "^1.0.0",
     "text-table": "^0.2.0",
     "underscore": "^1.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^1.6.0",
+    "eslint-config-ponko2": "^1.0.0"
   }
 }
