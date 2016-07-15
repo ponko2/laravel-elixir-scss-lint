@@ -20,6 +20,9 @@
     "eslint": "^3.0.1",
     "eslint-config-ponko2": "^4.2.0"
   },
+  "engines": {
+    "node": ">=4"
+  },
   "homepage": "https://github.com/ponko2/laravel-elixir-scss-lint",
   "keywords": [
     "elixir",
