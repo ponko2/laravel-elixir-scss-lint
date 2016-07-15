@@ -7,8 +7,8 @@
     "url": "https://github.com/ponko2/laravel-elixir-scss-lint/issues"
   },
   "dependencies": {
-    "events": "^1.1.0",
-    "gulp-scss-lint": "^0.3.8",
+    "events": "^1.1.1",
+    "gulp-scss-lint": "^0.4.0",
     "gulp-util": "^3.0.7",
     "map-stream": "^0.1.0",
     "object-assign": "^4.1.0",
