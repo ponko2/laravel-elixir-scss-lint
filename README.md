@@ -1,5 +1,8 @@
 # laravel-elixir-scss-lint
 
+[![npm version](https://badge.fury.io/js/laravel-elixir-scss-lint.svg)](https://badge.fury.io/js/laravel-elixir-scss-lint)
+[![Build Status](https://travis-ci.org/ponko2/laravel-elixir-scss-lint.svg?branch=master)](https://travis-ci.org/ponko2/laravel-elixir-scss-lint)
+
 ## Install
 
 ```sh
