@@ -1,32 +1,32 @@
-'use strict';
-
-var gutil         = require('gulp-util');
-var stringLength  = require('string-length');
-var table         = require('text-table');
-var map           = require('map-stream');
-var pluralize     = require('pluralize');
-var colors        = gutil.colors;
-var errorSymbol   = colors.red('✖');
-var warningSymbol = colors.yellow('⚠');
-var isWin         = process.platform === 'win32';
+const gutil         = require('gulp-util');
+const stringLength  = require('string-length');
+const table         = require('text-table');
+const map           = require('map-stream');
+const pluralize     = require('pluralize');
+const colors        = gutil.colors;
+const errorSymbol   = colors.red('✖');
+const warningSymbol = colors.yellow('⚠');
+const isWin         = process.platform === 'win32';
 
 module.exports = function () {
-  return map(function (files, cb) {
-    files.forEach(function (file) {
-      var output       = '';
-      var headers      = [];
-      var prevFile     = '';
-      var errorCount   = 0;
-      var warningCount = 0;
+  return map((files, cb) => {
+    files.forEach(file => {
+      const headers = [];
+
+      let output       = '';
+      let prevFile     = '';
+      let errorCount   = 0;
+      let warningCount = 0;
 
       if (file.scsslint.success) {
         return;
       }
 
-      output += table(file.scsslint.issues.map(function (issue, index) {
-        var isError = issue.severity !== 'warning';
+      // eslint-disable-next-line prefer-template
+      output += table(file.scsslint.issues.map((issue, index) => {
+        const isError = issue.severity !== 'warning';
 
-        var line = ['', colors.gray('line ' + issue.line)];
+        const line = ['', colors.gray(`line ${issue.line}`)];
 
         if (isError) {
           line.push(colors.red(issue.reason));
@@ -49,9 +49,9 @@ module.exports = function () {
         prevFile = file.path;
 
         return line;
-      }), {stringLength: stringLength}).split('\n').map(function (value, index) {
+      }), {stringLength}).split('\n').map((value, index) => {
         if (headers[index]) {
-          return '\n' + colors.underline(headers[index]) + '\n' + value;
+          return `\n${colors.underline(headers[index])}\n${value}`;
         }
 
         return value;
@@ -59,15 +59,15 @@ module.exports = function () {
         .join('\n') + '\n\n';
 
       if (errorCount > 0) {
-        output += '  ' + errorSymbol + '  ' +
-          errorCount + pluralize(' error', errorCount) +
-          (warningCount > 0 ? '\n' : '');
+        output += `  ${errorSymbol}  `;
+        output += errorCount + pluralize(' error', errorCount);
+        output += (warningCount > 0 ? '\n' : '');
       }
 
-      output += '  ' + warningSymbol + '  ' +
-        warningCount + pluralize(' warning', warningCount);
+      output += `  ${warningSymbol}  `;
+      output += warningCount + pluralize(' warning', warningCount);
 
-      gutil.log(output + '\n');
+      gutil.log(`${output}\n`);
     });
 
     cb(null, files);

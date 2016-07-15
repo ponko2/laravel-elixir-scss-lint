@@ -1,24 +1,18 @@
-'use strict';
+const scssLint        = require('gulp-scss-lint');
+const gutil           = require('gulp-util');
+const stylishReporter = require('./reporters/stylish');
+const failReporter    = require('./reporters/fail');
+const Task            = Elixir.Task;
 
-var gulp            = require('gulp');
-var Elixir          = require('laravel-elixir');
-var Task            = Elixir.Task;
-var config          = Elixir.config;
-var scssLint        = require('gulp-scss-lint');
-var gutil           = require('gulp-util');
-var objectAssign    = require('object-assign');
-var stylishReporter = require('./reporters/stylish');
-var failReporter    = require('./reporters/fail');
+Elixir.extend('scssLint', (src, options) => {
+  const notify = new Elixir.Notification();
 
-Elixir.extend('scssLint', function (src, options) {
-  var notify = new Elixir.Notification();
-
-  var paths = new Elixir.GulpPaths()
+  const paths = new Elixir.GulpPaths()
     .src(src || [
-      config.get('assets.css.sass.folder') + '/**/*.scss'
+      `${Elixir.config.get('assets.css.sass.folder')}/**/*.scss`
     ]);
 
-  var onError = function (err) {
+  const onError = function (err) {
     notify.error(err, 'SCSS-Lint Failed');
     this.emit('end');
   };
@@ -27,8 +21,8 @@ Elixir.extend('scssLint', function (src, options) {
     this.log(paths.src);
 
     return gulp.src(paths.src.path)
-      .pipe(scssLint(objectAssign({
-        customReport: function () {
+      .pipe(scssLint(Object.assign({
+        customReport() {
           // do nothing.
         }
       }, options)))

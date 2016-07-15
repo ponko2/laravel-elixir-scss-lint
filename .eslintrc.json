@@ -3,5 +3,9 @@
   "env": {
     "node": true
   },
-  "extends": "ponko2"
+  "extends": "ponko2",
+  "globals": {
+    "gulp": false,
+    "Elixir": false
+  }
 }

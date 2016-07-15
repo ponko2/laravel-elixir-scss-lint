@@ -11,7 +11,6 @@
     "gulp-scss-lint": "^0.4.0",
     "gulp-util": "^3.0.7",
     "map-stream": "^0.1.0",
-    "object-assign": "^4.1.0",
     "pluralize": "^3.0.0",
     "string-length": "^1.0.1",
     "text-table": "^0.2.0"
