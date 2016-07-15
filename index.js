@@ -23,7 +23,7 @@ function pluralize(str, count) {
   return str + (count === 1 ? '' : 's');
 }
 
-var stylishReporter = function () {
+function stylishReporter() {
   return map(function (files, cb) {
     _.each(files, function (file) {
       var output       = '';
@@ -54,23 +54,22 @@ var stylishReporter = function () {
         }
 
         if (isError) {
-          errorCount++;
+          errorCount += 1;
         } else {
-          warningCount++;
+          warningCount += 1;
         }
 
         prevFile = file.path;
 
         return line;
-      }), {
-        stringLength: stringLength
-      }).split('\n').map(function (value, index) {
+      }), {stringLength: stringLength}).split('\n').map(function (value, index) {
         if (headers[index]) {
           return '\n' + colors.underline(headers[index]) + '\n' + value;
         }
 
         return value;
-      }).join('\n') + '\n\n';
+      })
+        .join('\n') + '\n\n';
 
       if (errorCount > 0) {
         output += '  ' + errorSymbol + '  ' +
@@ -86,27 +85,28 @@ var stylishReporter = function () {
 
     cb(null, files);
   });
-};
+}
 
-var failReporter = function () {
+function failReporter() {
   return map(function (files, cb) {
+    var fails, message;
     var errors = _.filter(files, function (file) {
       return !file.scsslint.success;
     });
 
     if (errors.length > 0) {
-      var fails = _.map(errors, function (file) {
+      fails = _.map(errors, function (file) {
         return file.path;
       });
 
-      var message = fails.join(', ');
+      message = fails.join(', ');
 
       emitter.emit('error', new PluginError('scss-lint', message));
     }
 
     cb(null, files);
   });
-};
+}
 
 Elixir.extend('scssLint', function (src, options) {
   var paths = new Elixir.GulpPaths()
@@ -123,7 +123,11 @@ Elixir.extend('scssLint', function (src, options) {
     this.log(paths.src);
 
     return gulp.src(paths.src.path)
-      .pipe(scssLint(_.extend({customReport: function () {}}, options)))
+      .pipe(scssLint(_.extend({
+        customReport: function () {
+          // do nothing.
+        }
+      }, options)))
       .pipe(gutil.buffer())
       .pipe(stylishReporter())
       .pipe(failReporter())

@@ -3,5 +3,8 @@
   "env": {
     "node": true
   },
-  "extends": "ponko2/legacy"
+  "extends": "ponko2/legacy",
+  "rules": {
+    "require-jsdoc": "off"
+  }
 }
