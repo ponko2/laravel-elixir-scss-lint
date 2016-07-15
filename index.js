@@ -1,114 +1,18 @@
 'use strict';
 
-var gulp          = require('gulp');
-var Elixir        = require('laravel-elixir');
-var Task          = Elixir.Task;
-var config        = Elixir.config;
-var notify        = new Elixir.Notification();
-var scssLint      = require('gulp-scss-lint');
-var gutil         = require('gulp-util');
-var stringLength  = require('string-length');
-var table         = require('text-table');
-var map           = require('map-stream');
-var events        = require('events');
-var _             = require('underscore');
-var colors        = gutil.colors;
-var errorSymbol   = colors.red('✖');
-var warningSymbol = colors.yellow('⚠');
-var emitter       = new events.EventEmitter();
-var PluginError   = gutil.PluginError;
-var isWin         = process.platform === 'win32';
-
-function pluralize(str, count) {
-  return str + (count === 1 ? '' : 's');
-}
-
-function stylishReporter() {
-  return map(function (files, cb) {
-    _.each(files, function (file) {
-      var output       = '';
-      var headers      = [];
-      var prevFile     = '';
-      var errorCount   = 0;
-      var warningCount = 0;
-
-      if (file.scsslint.success) {
-        return;
-      }
-
-      output += table(file.scsslint.issues.map(function (issue, index) {
-        var isError = issue.severity !== 'warning';
-
-        var line = ['', colors.gray('line ' + issue.line)];
-
-        if (isError) {
-          line.push(colors.red(issue.reason));
-        } else if (!isWin) {
-          line.push(colors.blue(issue.reason));
-        } else {
-          line.push(colors.cyan(issue.reason));
-        }
-
-        if (file.path !== prevFile) {
-          headers[index] = file.path;
-        }
-
-        if (isError) {
-          errorCount += 1;
-        } else {
-          warningCount += 1;
-        }
-
-        prevFile = file.path;
-
-        return line;
-      }), {stringLength: stringLength}).split('\n').map(function (value, index) {
-        if (headers[index]) {
-          return '\n' + colors.underline(headers[index]) + '\n' + value;
-        }
-
-        return value;
-      })
-        .join('\n') + '\n\n';
-
-      if (errorCount > 0) {
-        output += '  ' + errorSymbol + '  ' +
-          errorCount + pluralize(' error', errorCount) +
-          (warningCount > 0 ? '\n' : '');
-      }
-
-      output += '  ' + warningSymbol + '  ' +
-        warningCount + pluralize(' warning', warningCount);
-
-      gutil.log(output + '\n');
-    });
-
-    cb(null, files);
-  });
-}
-
-function failReporter() {
-  return map(function (files, cb) {
-    var fails, message;
-    var errors = _.filter(files, function (file) {
-      return !file.scsslint.success;
-    });
-
-    if (errors.length > 0) {
-      fails = _.map(errors, function (file) {
-        return file.path;
-      });
-
-      message = fails.join(', ');
-
-      emitter.emit('error', new PluginError('scss-lint', message));
-    }
-
-    cb(null, files);
-  });
-}
+var gulp            = require('gulp');
+var Elixir          = require('laravel-elixir');
+var Task            = Elixir.Task;
+var config          = Elixir.config;
+var scssLint        = require('gulp-scss-lint');
+var gutil           = require('gulp-util');
+var objectAssign    = require('object-assign');
+var stylishReporter = require('./reporters/stylish');
+var failReporter    = require('./reporters/fail');
 
 Elixir.extend('scssLint', function (src, options) {
+  var notify = new Elixir.Notification();
+
   var paths = new Elixir.GulpPaths()
     .src(src || [
       config.get('assets.css.sass.folder') + '/**/*.scss'
@@ -123,7 +27,7 @@ Elixir.extend('scssLint', function (src, options) {
     this.log(paths.src);
 
     return gulp.src(paths.src.path)
-      .pipe(scssLint(_.extend({
+      .pipe(scssLint(objectAssign({
         customReport: function () {
           // do nothing.
         }
