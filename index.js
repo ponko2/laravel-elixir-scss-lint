@@ -37,5 +37,5 @@ Elixir.extend('scssLint', function (src, options) {
       .pipe(failReporter())
       .on('error', onError);
   })
-  .watch(paths.src.path);
+    .watch(paths.src.path);
 });
