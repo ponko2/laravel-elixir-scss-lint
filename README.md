@@ -6,11 +6,20 @@
 ## Install
 
 ```sh
-$ gem install scss-lint
+$ gem install scss_lint
 ```
+
+### Laravel Elixir >=3.0.0-0 <6.0.0-0
 
 ```sh
 $ npm install laravel-elixir-scss-lint --save-dev
+$ touch .scss-lint.yml
+```
+
+### Laravel Elixir >=6.0.0-11
+
+```sh
+$ npm install laravel-elixir-scss-lint@beta --save-dev
 $ touch .scss-lint.yml
 ```
 
