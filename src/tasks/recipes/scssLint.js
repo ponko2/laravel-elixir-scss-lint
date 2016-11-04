@@ -7,7 +7,7 @@ import SCSSLintTask from '../SCSSLintTask';
  * @param {object|null}       options Stylelint options
  * @returns {void}
  */
-function task(src, options) {
+function task(src, options = {}) {
   // eslint-disable-next-line no-new
   new SCSSLintTask('scss-lint', getPaths(src), options);
 }

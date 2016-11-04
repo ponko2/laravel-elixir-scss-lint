@@ -1,4 +1,4 @@
-/* eslint-disable global-require */
+/* eslint-disable class-methods-use-this, global-require */
 
 let gutil, scssLint, stylishReporter, failReporter;
 
@@ -13,8 +13,8 @@ export default class SCSSLintTask extends Elixir.Task {
   constructor(name, paths, options) {
     super(name, null, paths);
 
-    this.output  = undefined;
-    this.options = options || {};
+    this.output  = '\u200B';
+    this.options = options;
   }
 
   /**
@@ -36,10 +36,7 @@ export default class SCSSLintTask extends Elixir.Task {
    */
   gulpTask() {
     return gulp.src(this.src.path)
-      .pipe((() => {
-        this.recordStep(`Executing ${this.ucName()}`);
-        return this.lint();
-      })())
+      .pipe(this.lint())
       .pipe(gutil.buffer())
       .pipe(stylishReporter())
       .pipe(failReporter())
@@ -61,6 +58,8 @@ export default class SCSSLintTask extends Elixir.Task {
    * @returns {Stream} Object stream usable in Gulp pipes.
    */
   lint() {
+    this.recordStep(`Executing ${this.ucName()}`);
+
     return scssLint(Object.assign({
       customReport() {
         // do nothing.

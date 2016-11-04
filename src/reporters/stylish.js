@@ -10,7 +10,7 @@ const isWin         = process.platform === 'win32';
 
 module.exports = function () {
   return map((files, cb) => {
-    files.forEach(file => {
+    files.forEach((file) => {
       const headers = [];
 
       let output       = '';
