@@ -9,16 +9,16 @@
   "dependencies": {
     "events": "^1.1.1",
     "gulp-scss-lint": "^0.4.0",
-    "gulp-util": "^3.0.7",
+    "gulp-util": "^3.0.8",
     "map-stream": "^0.1.0",
-    "object-assign": "^4.1.0",
+    "object-assign": "^4.1.1",
     "pluralize": "^5.0.0",
     "string-length": "^1.0.1",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
-    "eslint": "^3.2.0",
-    "eslint-config-ponko2": "^10.0.0"
+    "eslint": "^4.1.1",
+    "eslint-config-ponko2": "^11.0.0"
   },
   "engines": {
     "node": ">=4"

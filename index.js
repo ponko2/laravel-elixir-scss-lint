@@ -14,9 +14,7 @@ Elixir.extend('scssLint', function (src, options) {
   var notify = new Elixir.Notification();
 
   var paths = new Elixir.GulpPaths()
-    .src(src || [
-      config.get('assets.css.sass.folder') + '/**/*.scss'
-    ]);
+    .src(src || [config.get('assets.css.sass.folder') + '/**/*.scss']);
 
   var onError = function (err) {
     notify.error(err, 'SCSS-Lint Failed');
